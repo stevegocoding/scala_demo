@@ -2,26 +2,24 @@ package com.magkbdev.searchFlights
 
 import java.security.InvalidParameterException
 
+object FactoryType extends Enumeration {
+  val FilesDAO = Value
+}
+
 trait AbastractFlightsDAOFactory {
   def createDAO: FlightsDAO
 }
 
 object AbastractFlightsDAOFactory {
-  object FactoryType extends Enumeration {
-  }
 
-  def apply(factoryType: String) = {
+  def apply(factoryType: FactoryType.Value) = {
     factoryType match {
-      case "file" => FileFlightsDAOFactory()
+      case FactoryType.FilesDAO => new FileFlightsDAOFactory()
       case _ => throw new InvalidParameterException("No factory type found!")
     }
   }
 }
 
 class FileFlightsDAOFactory(var files: List[String] = List()) extends AbastractFlightsDAOFactory {
-  def createDAO: FlightsDAO = FilesFlightsDAO(files)
-}
-
-object FileFlightsDAOFactory {
-  def apply(): FileFlightsDAOFactory = new FileFlightsDAOFactory()
+  def createDAO: FlightsDAO = new FilesFlightsDAO(files)
 }

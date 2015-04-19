@@ -3,25 +3,29 @@ package com.magkbdev.searchFlights
 import scala.io.Source
 
 /**
- * Created by magkbdev on 4/17/15.
+ * An abstract flight DAO trait
  */
-
-trait FlightsDAO {}
-class FilesFlightsDAO(fileNames: List[String]) extends FlightsDAO {
-  def findWhere(f: FlightEntry => Boolean): List[FlightEntry] = {
-    fileNames.flatMap(
-      file => {
-        val source = Source.fromFile(file)
-        val ret = for (i <- source.getLines().drop(1) ) yield {
-          FlightDataParser.parseLine(i)
-        }
-        source.close()
-        ret.filter(f)
-      }
-    ).distinct
-  }
+trait FlightsDAO {
+  def findWhere(f: FlightEntry => Boolean): List[FlightEntry]
 }
 
-object FilesFlightsDAO {
-  def apply(files: List[String]): FilesFlightsDAO = new FilesFlightsDAO(files)
+/**
+ * An simple files flights DAO
+ */
+class FilesFlightsDAO(val fileNames: List[String]) extends FlightsDAO {
+  def removeDup(lst: List[FlightEntry]): List[FlightEntry] = {
+    if (lst.isEmpty) lst
+    else lst.head :: removeDup(lst.filter(_ != lst.head))
+  }
+
+  def findWhere(f: FlightEntry => Boolean): List[FlightEntry] = {
+    val fs = fileNames.flatMap(
+      file => {
+        val source = Source.fromFile(file)
+        val ret = for (i <- source.getLines().drop(1)) yield FlightDataParser.parseLine(i)
+        ret.filter(f)
+      }
+    )
+    removeDup(fs)
+  }
 }

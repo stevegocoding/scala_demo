@@ -18,7 +18,7 @@ class SearchFlightsSuite extends FunSuite {
     val cal1 = FlightDataParser.parseDate(date1).getOrElse(Calendar.getInstance())
 
     assert(cal1.get(Calendar.YEAR) == 2014)
-    assert(cal1.get(Calendar.MONTH) == 6)
+    assert(cal1.get(Calendar.MONTH) == Calendar.JUNE)
     assert(cal1.get(Calendar.DATE) == 21)
     assert(cal1.get(Calendar.HOUR_OF_DAY) == 17)
     assert(cal1.get(Calendar.MINUTE) == 55)
@@ -27,7 +27,7 @@ class SearchFlightsSuite extends FunSuite {
     val cal2 = FlightDataParser.parseDate(date2).getOrElse(Calendar.getInstance())
 
     assert(cal2.get(Calendar.YEAR) == 2014)
-    assert(cal2.get(Calendar.MONTH) == 6)
+    assert(cal2.get(Calendar.MONTH) == Calendar.JUNE)
     assert(cal2.get(Calendar.DATE) == 30)
     assert(cal2.get(Calendar.HOUR_OF_DAY) == 9)
     assert(cal2.get(Calendar.MINUTE) == 30)
@@ -45,7 +45,7 @@ class SearchFlightsSuite extends FunSuite {
     assert(flight.origin == "YYC")
 
     assert(flight.departureTime.get(Calendar.YEAR) == 2014)
-    assert(flight.departureTime.get(Calendar.MONTH) == 6)
+    assert(flight.departureTime.get(Calendar.MONTH) == Calendar.JUNE)
     assert(flight.departureTime.get(Calendar.DATE) == 23)
     assert(flight.departureTime.get(Calendar.HOUR_OF_DAY) == 12)
     assert(flight.departureTime.get(Calendar.MINUTE) == 40)
@@ -53,7 +53,7 @@ class SearchFlightsSuite extends FunSuite {
     assert(flight.dest == "YYZ")
 
     assert(flight.arrivalTime.get(Calendar.YEAR) == 2014)
-    assert(flight.arrivalTime.get(Calendar.MONTH) == 6)
+    assert(flight.arrivalTime.get(Calendar.MONTH) == Calendar.JUNE)
     assert(flight.arrivalTime.get(Calendar.DATE) == 23)
     assert(flight.arrivalTime.get(Calendar.HOUR_OF_DAY) == 14)
     assert(flight.arrivalTime.get(Calendar.MINUTE) == 54)
@@ -66,7 +66,7 @@ class SearchFlightsSuite extends FunSuite {
     assert(flight2.origin == "JFK")
 
     assert(flight2.departureTime.get(Calendar.YEAR) == 2014)
-    assert(flight2.departureTime.get(Calendar.MONTH) == 6)
+    assert(flight2.departureTime.get(Calendar.MONTH) == Calendar.JUNE)
     assert(flight2.departureTime.get(Calendar.DATE) == 15)
     assert(flight2.departureTime.get(Calendar.HOUR_OF_DAY) == 9)
     assert(flight2.departureTime.get(Calendar.MINUTE) == 30)
@@ -74,7 +74,7 @@ class SearchFlightsSuite extends FunSuite {
     assert(flight2.dest == "YEG")
 
     assert(flight2.arrivalTime.get(Calendar.YEAR) == 2014)
-    assert(flight2.arrivalTime.get(Calendar.MONTH) == 6)
+    assert(flight2.arrivalTime.get(Calendar.MONTH) == Calendar.JUNE)
     assert(flight2.arrivalTime.get(Calendar.DATE) == 15)
     assert(flight2.arrivalTime.get(Calendar.HOUR_OF_DAY) == 17)
     assert(flight2.arrivalTime.get(Calendar.MINUTE) == 50)
@@ -82,6 +82,15 @@ class SearchFlightsSuite extends FunSuite {
     assert(flight2.price == 730)
   }
 
+  test("test findWhere") {
+    val daoFactory = AbastractFlightsDAOFactory(FactoryType.FilesDAO)
+    daoFactory.files = List("data/Provider1.txt", "data/Provider1.txt")
+    val flights = daoFactory.createDAO.findWhere( (f: FlightEntry) => f.origin == "LAS" && f.dest == "LAX")
+
+    assert(flights.size == 1)
+    assert(flights(0).origin == "LAS")
+    assert(flights(0).dest == "LAX")
+  }
 
 
 }

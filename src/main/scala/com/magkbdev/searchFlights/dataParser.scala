@@ -22,7 +22,7 @@ object FlightDataParser {
       case datePattern(month, day, year, hour, min) => {
         val cal= Calendar.getInstance()
         cal.clear()
-        cal.set(year.toInt, month.toInt, day.toInt, hour.toInt, min.toInt)
+        cal.set(year.toInt, month.toInt - 1, day.toInt, hour.toInt, min.toInt)
         Some(cal)
       }
       case _ => None
