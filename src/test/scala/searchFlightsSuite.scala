@@ -82,14 +82,13 @@ class SearchFlightsSuite extends FunSuite {
     assert(flight2.price == 730)
   }
 
-  test("test findWhere") {
+  test("Search duplicate flights ") {
     val daoFactory = AbastractFlightsDAOFactory(FactoryType.FilesDAO)
-    daoFactory.files = List("data/Provider1.txt", "data/Provider1.txt")
-    val flights = daoFactory.createDAO.findWhere( (f: FlightEntry) => f.origin == "LAS" && f.dest == "LAX")
-
-    assert(flights.size == 1)
-    assert(flights(0).origin == "LAS")
-    assert(flights(0).dest == "LAX")
+    daoFactory.files = List("data/Provider1.txt", "data/Provider2.txt", "data/Provider3.txt")
+    val flights = daoFactory.createDAO.findWhere(
+      (f: FlightEntry) => f.origin == "YYC" && f.dest == "YYZ"
+    )
+    assert(flights.size == 3)
   }
 
   test("Parse command arguments") {
@@ -98,6 +97,5 @@ class SearchFlightsSuite extends FunSuite {
     assert(od._1 == "YYC")
     assert(od._2 == "YYZ")
   }
-
 
 }
