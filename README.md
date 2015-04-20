@@ -1,3 +1,6 @@
+Written by Guangfu Shi (Steve)
+e-mail: stevegocoding@gmail.com
+
 # How to build/run
 - Install scala, sbt
 - 'cd' into project folder
