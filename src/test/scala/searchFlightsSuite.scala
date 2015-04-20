@@ -92,5 +92,12 @@ class SearchFlightsSuite extends FunSuite {
     assert(flights(0).dest == "LAX")
   }
 
+  test("Parse command arguments") {
+    val args = Array("-o", "YYC", "-d", "YYZ")
+    val od: (String, String) = Main.parseArgs(args).getOrElse(("", ""))
+    assert(od._1 == "YYC")
+    assert(od._2 == "YYZ")
+  }
+
 
 }

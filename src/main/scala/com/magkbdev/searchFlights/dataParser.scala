@@ -5,7 +5,7 @@ import java.util.Date
 import java.util.Calendar
 
 /**
- * Created by magkbdev on 4/16/15.
+ * A data parser using scala's Regex
  */
 object FlightDataParser {
   def parseLocation(str: String): Option[String] = {
@@ -37,16 +37,18 @@ object FlightDataParser {
     }
   }
 
+  // A list of parsers' functions for cleaner line parsing
   val flightParsers = List(parseLocation _, parseDate _, parseLocation _, parseDate _, parsePrice _)
 
   def parseLine(line: String): FlightEntry = {
-    val params = for ( (s, parser) <- line.split(""",|\|""").toList.zip(flightParsers) ) yield parser(s)
-        /*
-        match {
-          case None => throw new Exception("Parsing data failed")
-          case _ =>
-        }
-        */
+    val params = for ( (s, parser) <- line.split(""",|\|""").toList.zip(flightParsers) ) yield {
+      val r = parser(s)
+      r match {
+        case None => throw new Exception("Parsing data failed")
+        case _ => r
+      }
+    }
+
     new FlightEntry(
       params(0) match { case Some(x:String) => x case _ => ""},
       params(1) match { case Some(x:Calendar) => x case _ => Calendar.getInstance()},
