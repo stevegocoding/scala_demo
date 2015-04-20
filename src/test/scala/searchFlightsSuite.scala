@@ -83,7 +83,7 @@ class SearchFlightsSuite extends FunSuite {
   }
 
   test("Search duplicate flights ") {
-    val daoFactory = AbastractFlightsDAOFactory(FactoryType.FilesDAO)
+    val daoFactory = AbstractFlightsDAOFactory(FactoryType.FilesDAO)
     daoFactory.files = List("data/Provider1.txt", "data/Provider2.txt", "data/Provider3.txt")
     val flights = daoFactory.createDAO.findWhere(
       (f: FlightEntry) => f.origin == "YYC" && f.dest == "YYZ"
@@ -92,7 +92,7 @@ class SearchFlightsSuite extends FunSuite {
   }
 
   test("Sort flights search result by price primarily and departure time in secondary") {
-    val daoFactory = AbastractFlightsDAOFactory(FactoryType.FilesDAO)
+    val daoFactory = AbstractFlightsDAOFactory(FactoryType.FilesDAO)
     daoFactory.files = List("src/test/data/Provider1.txt",
       "src/test/data/Provider2.txt", "src/test/data/Provider3.txt")
     val flights = daoFactory.createDAO.findWhere(

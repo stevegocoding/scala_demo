@@ -6,11 +6,11 @@ object FactoryType extends Enumeration {
   val FilesDAO = Value
 }
 
-trait AbastractFlightsDAOFactory {
+trait AbstractFlightsDAOFactory {
   def createDAO: FlightsDAO
 }
 
-object AbastractFlightsDAOFactory {
+object AbstractFlightsDAOFactory {
 
   def apply(factoryType: FactoryType.Value) = {
     factoryType match {
@@ -20,6 +20,6 @@ object AbastractFlightsDAOFactory {
   }
 }
 
-class FileFlightsDAOFactory(var files: List[String] = List()) extends AbastractFlightsDAOFactory {
+class FileFlightsDAOFactory(var files: List[String] = List()) extends AbstractFlightsDAOFactory {
   def createDAO: FlightsDAO = new FilesFlightsDAO(files)
 }

@@ -18,7 +18,7 @@ object Main {
   def main(args: Array[String]): Unit = {
     parseArgs(args) match {
       case Some(od:(String,String)) => {
-        val daoFactory = AbastractFlightsDAOFactory(FactoryType.FilesDAO)
+        val daoFactory = AbstractFlightsDAOFactory(FactoryType.FilesDAO)
         daoFactory.files = List("data/Provider1.txt", "data/Provider2.txt", "data/Provider3.txt")
 
         val flights = daoFactory.createDAO.findWhere(

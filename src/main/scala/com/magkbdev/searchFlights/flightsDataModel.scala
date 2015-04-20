@@ -4,7 +4,7 @@ import java.util.Calendar
 import java.text.SimpleDateFormat
 
 /**
- * Created by magkbdev on 4/16/15.
+ * The flight data model
  */
 
 class FlightEntry(val origin: String, val departureTime: Calendar,
