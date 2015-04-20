@@ -1,0 +1,3 @@
+Origin,Departure Time,Destination,Destination Time,Price
+YYZ,6/15/2014 6:45:00,YYC,6/15/2014 8:54:00,$578.00
+MIA|6/22/2014 6:50:00|ORD|6/22/2014 9:02:00|$576.00

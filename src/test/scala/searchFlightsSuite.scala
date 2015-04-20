@@ -91,6 +91,24 @@ class SearchFlightsSuite extends FunSuite {
     assert(flights.size == 3)
   }
 
+  test("Sort flights search result by price primarily and departure time in secondary") {
+    val daoFactory = AbastractFlightsDAOFactory(FactoryType.FilesDAO)
+    daoFactory.files = List("src/test/data/Provider1.txt",
+      "src/test/data/Provider2.txt", "src/test/data/Provider3.txt")
+    val flights = daoFactory.createDAO.findWhere(
+      (f: FlightEntry) => f.origin == "YYZ" && f.dest == "YYC"
+    )
+    assert(flights.size == 3)
+    assert(flights(0).price < flights(1).price && flights(1).price < flights(2).price)
+
+    val flights2 = daoFactory.createDAO.findWhere(
+      (f: FlightEntry) => f.origin == "MIA" && f.dest == "ORD"
+    )
+    assert(flights2.size == 2)
+    assert(flights2(0).price == flights2(1).price &&
+      flights2(0).departureTime.compareTo(flights2(1).departureTime) < 0)
+  }
+
   test("Parse command arguments") {
     val args = Array("-o", "YYC", "-d", "YYZ")
     val od: (String, String) = Main.parseArgs(args).getOrElse(("", ""))
