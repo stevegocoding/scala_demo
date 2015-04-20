@@ -23,7 +23,7 @@ object Main {
 
         val flights = daoFactory.createDAO.findWhere(
           (entry: FlightEntry) => entry.origin == od._1 && entry.dest == od._2
-        ).sortBy(_.departureTime).sortBy(_.price)
+        )
         if (flights.isEmpty) println("No flights found!") else flights.map(FlightEntry.prettyPrint(_))
       }
       case _ => printUsage()

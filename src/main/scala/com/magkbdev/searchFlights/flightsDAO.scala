@@ -26,6 +26,6 @@ class FilesFlightsDAO(val fileNames: List[String]) extends FlightsDAO {
         ret.filter(f)
       }
     )
-    removeDup(fs)
+    removeDup(fs).sortBy(_.departureTime).sortBy(_.price)
   }
 }
