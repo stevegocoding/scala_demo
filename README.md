@@ -1,5 +1,4 @@
-##Written by Guangfu Shi (Steve)
-##e-mail: stevegocoding@gmail.com
+Written by Guangfu Shi (Steve) stevegocoding@gmail.com
 
 # How to build/run
 - Install scala, sbt
